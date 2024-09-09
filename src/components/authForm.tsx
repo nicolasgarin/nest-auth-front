@@ -11,8 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { userLogin } from "@/app/user.api";
+import { getMyUser, logOut, userLogin } from "@/app/user.api";
 import { UserLoginData } from "@/app/@types/user";
+import useAuthStore from "@/store/authStore";
 
 export function AuthForm() {
   const { register, handleSubmit } = useForm({
@@ -25,6 +26,14 @@ export function AuthForm() {
   const onSubmit = handleSubmit(async (data: UserLoginData) => {
     userLogin(data);
   });
+
+  const onGetUserInfo = () => {
+    getMyUser("0fc44ce2-33e9-4521-9c65-ac0137d5de6f");
+  };
+
+  const onSignOut = () => {
+    logOut();
+  };
 
   return (
     <Card className="w-[350px]">
@@ -41,7 +50,12 @@ export function AuthForm() {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input {...register("password")} id="password" placeholder="Password" type="password" />
+              <Input
+                {...register("password")}
+                id="password"
+                placeholder="Password"
+                type="password"
+              />
             </div>
           </div>
         </CardContent>
@@ -49,6 +63,8 @@ export function AuthForm() {
           <Button>Login</Button>
         </CardFooter>
       </form>
+      <Button onClick={onGetUserInfo}>User info</Button>
+      <Button onClick={onSignOut}>Logout</Button>
     </Card>
   );
 }

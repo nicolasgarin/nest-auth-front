@@ -1,11 +1,16 @@
-import { getUsers } from "./user.api";
+import { getUsers, logOut } from "./user.api";
 import { User } from "./@types/user";
 import { AuthForm } from "@/components/authForm";
+import useAuthStore from "@/store/authStore";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
 async function HomePage() {
   const users = await getUsers();
+
+
+  
   return (
     <>
       <div className="flex justify-between">
